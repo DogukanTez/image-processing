@@ -1,5 +1,6 @@
 package com.dogukantez.image_processing.service;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,7 +12,7 @@ import java.io.IOException;
 @Service
 public class ImageProcessingService {
 
-    public byte[] invertImage (final MultipartFile imageFile) throws IOException{
+    public byte[] invertImage(final @NonNull MultipartFile imageFile) throws IOException{
         BufferedImage originalImage = ImageIO.read(imageFile.getInputStream());
 
         BufferedImage invertedImage = new BufferedImage(

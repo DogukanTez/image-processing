@@ -22,7 +22,7 @@ public class ImageController {
 
     @PostMapping(value="/filter/invert",consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
     produces = MediaType.IMAGE_PNG_VALUE)
-    public ResponseEntity<byte[]> invertFilter(@RequestParam("image")MultipartFile imageFile) throws IOException{
+    public ResponseEntity<byte[]> invertFilter(@RequestParam("image") MultipartFile imageFile) throws IOException{
         byte[] invertedImage = imageProcessingService.invertImage(imageFile);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(invertedImage);
     }
