@@ -48,4 +48,11 @@ public class ImageController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(image);
     }
 
+    @PostMapping(value ="/filter/brighten",consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> brightenFilter(@RequestParam("image") MultipartFile imageFile) throws IOException{
+        byte[] image = imageProcessingService.brightenImage(imageFile);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(image);
+    }
+
 }

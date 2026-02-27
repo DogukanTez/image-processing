@@ -139,4 +139,35 @@ public class ImageProcessingService {
         return component;
     }
 
+
+
+
+
+    public byte[] brightenImage(final MultipartFile imageFile) throws IOException {
+        BufferedImage originalImage = ImageIO.read(imageFile.getInputStream());
+
+        BufferedImage filteredImage = new BufferedImage(
+                originalImage.getWidth(),
+                originalImage.getHeight(),
+                BufferedImage.TYPE_INT_RGB
+        );
+
+        for (int x = 0; x < originalImage.getWidth(); x++) {
+            for (int y = 0; y < originalImage.getHeight(); y++) {
+                Color color = new Color(originalImage.getRGB(x,y));
+
+                int red = Math.min(255, color.getRed() + 20);
+                int green = Math.min (255, color.getGreen() + 20);
+                int blue = Math.min(255, color.getBlue() + 20);
+
+                Color newColor = new Color(red,green,blue);
+                filteredImage.setRGB(x,y,newColor.getRGB());
+            }
+        }
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(filteredImage,"png", baos);
+        return baos.toByteArray();
+    }
+
 }
