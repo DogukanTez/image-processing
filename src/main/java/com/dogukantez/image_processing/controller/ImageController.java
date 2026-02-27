@@ -27,17 +27,24 @@ public class ImageController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(invertedImage);
     }
 
-    @PostMapping(value = "filter/solarize",consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+    @PostMapping(value ="/filter/solarize",consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
     produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> solarizeFilter(@RequestParam("image") MultipartFile imageFile) throws IOException{
         byte[] image = imageProcessingService.solarizeImage(imageFile);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(image);
     }
 
-    @PostMapping(value = "filter/clip",consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+    @PostMapping(value ="/filter/clip",consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> clipFilter(@RequestParam("image") MultipartFile imageFile) throws IOException{
         byte[] image = imageProcessingService.clipImage(imageFile);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(image);
+    }
+
+    @PostMapping(value ="/filter/custom-filter",consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> customFilter(@RequestParam("image") MultipartFile imageFile) throws IOException{
+        byte[] image = imageProcessingService.applyCustomFilter(imageFile);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(image);
     }
 

@@ -100,4 +100,43 @@ public class ImageProcessingService {
         return Math.max(50,component);
     }
 
+
+
+
+    public byte[] applyCustomFilter(final MultipartFile imageFile) throws IOException {
+        BufferedImage originalImage = ImageIO.read(imageFile.getInputStream());
+
+        BufferedImage filteredImage = new BufferedImage(
+                originalImage.getWidth(),
+                originalImage.getHeight(),
+                BufferedImage.TYPE_INT_RGB
+        );
+
+        for (int x = 0; x < originalImage.getWidth(); x++) {
+            for (int y = 0; y < originalImage.getHeight(); y++) {
+                Color color = new Color(originalImage.getRGB(x,y));
+
+                int red = customFilterComponent(color.getRed());
+                int green= customFilterComponent(color.getGreen());
+                int blue= customFilterComponent(color.getBlue());
+
+                Color newColor = new Color(red,green,blue);
+                filteredImage.setRGB(x,y,newColor.getRGB());
+            }
+        }
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(filteredImage,"png", baos);
+        return baos.toByteArray();
+    }
+
+    private int customFilterComponent(int component){
+        if(component < 60){
+            return Math.min(255,component+50);
+        }else if (component > 200){
+            return Math.max(0,component-30);
+        }
+        return component;
+    }
+
 }
