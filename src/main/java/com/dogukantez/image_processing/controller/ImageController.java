@@ -27,5 +27,11 @@ public class ImageController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(invertedImage);
     }
 
+    @PostMapping(value = "filter/solarize",consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+    produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> solarizeFilter(@RequestParam("image") MultipartFile imageFile) throws IOException{
+        byte[] image = imageProcessingService.solarizeImage(imageFile);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(image);
+    }
 
 }
